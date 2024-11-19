@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                        sh '''
-                    docker run --rm codexdebayan/test:latest python test_calculator.py 
+                    docker run --rm codexdebayan/app:latest python test_calculator.py 
                     '''
                     }
                 }
