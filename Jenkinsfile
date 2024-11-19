@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        Docker_image = 'test-app'  // Replace with the actual image name (e.g., 'calculator-app')
+        Docker_image = 'app'  // Replace with the actual image name (e.g., 'calculator-app')
         DOCKER_TAG = 'latest'
     }
     stages {
@@ -10,20 +10,20 @@ pipeline {
                 checkout scmGit(
                     branches: [[name: '*/master']],
                     extensions: [],
-                    userRemoteConfigs: [[credentialsId: 'GItHUb', url: 'https://github.com/sanjayDatagrokr/Test']]
+                    userRemoteConfigs: [[credentialsId: 'GItHUb', url: 'https://github.com/codexdebayan/Test']]
                 )
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build . -t sanjaymatta36/${Docker_image}:${DOCKER_TAG}'
+                sh 'docker build . -t codexdebayan/${Docker_image}:${DOCKER_TAG}'
             }
         }
         stage('Test') {
             steps {
                 script {
                        sh '''
-                    docker run --rm sanjaymatta36/test-app:latest python test_calculator.py 
+                    docker run --rm codexdebayan/test-app:latest python test_calculator.py 
                     '''
                     }
                 }
@@ -35,11 +35,11 @@ pipeline {
                     withCredentials([string(credentialsId: 'Docker_HUb', variable: 'Docker_Hub')]) {
                         // Login to Docker Hub
                         sh '''
-                            echo $Docker_Hub | docker login -u sanjaymatta36 --password-stdin
+                            echo $Docker_Hub | docker login -u codexdebayan --password-stdin
                         '''
                     }
                     // Push the Docker image to Docker Hub
-                    sh 'docker push sanjaymatta36/${Docker_image}'
+                    sh 'docker push codexdebayan/${Docker_image}'
                 }
             }
         }
