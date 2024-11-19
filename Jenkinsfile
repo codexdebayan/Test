@@ -32,15 +32,14 @@ pipeline {
         stage('Push to Hub') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'Docker_HUb', variable: 'Docker_Hub')]) {
-                        // Login to Docker Hub
-                        sh '''
-                            echo $Docker_Hub | docker login -u codexdebayan --password-stdin
+                // Login to Docker Hub
+                    sh '''
+                        echo "Cdebayan#2024" | docker login -u codexdebayan --password-stdin
                         '''
-                    }
-                    // Push the Docker image to Docker Hub
-                    sh 'docker push codexdebayan/${Docker_image}'
+                        // Push the Docker image to Docker Hub
+                        sh 'docker push codexdebayan/${Docker_image}'
                 }
+
             }
         }
     }
